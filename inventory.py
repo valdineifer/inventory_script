@@ -1,11 +1,13 @@
 import json
 import platform
-import socket
+import psutil
+import cross_platform_inventory
 
 def windows_inventory(base_dict):
    base_dict['windows'] = {
       'version': platform.win32_ver(),
       'edition': platform.win32_edition(),
+      'services': list(psutil.win_service_iter()),
    }
    
    return base_dict
@@ -23,18 +25,7 @@ def linux_inventory(base_dict):
 def main():
    file = open('inventory.json', 'w')
 
-   hostname = socket.gethostname()
-
-   base_dict = {
-      'hostname': hostname,
-      'ip': socket.gethostbyname(hostname),
-      'arch': platform.architecture(),
-      'machine': platform.machine(),
-      'processor': platform.processor(),
-      'system': platform.system(),
-      'release': platform.release(),
-      'version': platform.version(),
-   }
+   base_dict = cross_platform_inventory.inventory()
 
    if (platform.system() == 'Windows'):
       json.dump(windows_inventory(base_dict), file)
