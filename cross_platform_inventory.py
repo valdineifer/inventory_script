@@ -2,7 +2,7 @@ import platform
 import psutil
 import socket
 
-
+# TODO: obter modelo de processador
 def get_cpu_info():
    return {
       'count': psutil.cpu_count(),
@@ -10,7 +10,7 @@ def get_cpu_info():
       'max_freq': psutil.cpu_freq().max,
    }
 
-
+# TODO: obter informações de discos (modelo, etc)
 def get_disks_info():
    partitions = []
 
@@ -28,7 +28,7 @@ def get_disks_info():
    
    return partitions
 
-
+# TODO: obter infos de MHz
 def get_memory_info():
    memory_info = psutil.virtual_memory()
 
