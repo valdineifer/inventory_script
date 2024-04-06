@@ -58,7 +58,7 @@ def get_sensors_info():
    
    return sensors
 
-
+# TODO: get mac address, etc  
 def inventory():
    hostname = socket.gethostname()
 
