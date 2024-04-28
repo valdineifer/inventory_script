@@ -1,6 +1,8 @@
 import platform
 import psutil
 import socket
+# from uuid import getnode
+import getmac
 
 # TODO: obter modelo de processador
 def get_cpu_info():
@@ -16,6 +18,9 @@ def get_disks_info():
 
    for partition in psutil.disk_partitions():
       usage = psutil.disk_usage(partition.mountpoint)
+
+      if (partition.mountpoint.__contains__('snap')):
+         continue
 
       partitions.append({
          'device': partition.device,
@@ -64,6 +69,7 @@ def inventory():
 
    return {
       'hostname': hostname,
+      'mac': getmac.get_mac_address(),
       'ip': socket.gethostbyname(hostname),
       'arch': platform.architecture(),
       'machine': platform.machine(),
@@ -74,7 +80,7 @@ def inventory():
       'cpu': get_cpu_info(),
       'memory': get_memory_info(),
       'disks': get_disks_info(),
-      'boot_time': psutil.boot_time(),
+      'boot_time': psutil.boot_time() * 1000,
       'users': list(map(lambda user: user._asdict(), psutil.users())),
       'sensors': get_sensors_info()
    }
