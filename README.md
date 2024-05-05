@@ -1,5 +1,11 @@
 # Script
 
+## Setup final script
+Executar como root:
+
+`wget -O - https://raw.githubusercontent.com/valdineifer/inventory_script/master/lab-startup.sh | bash`
+
+
 ## Setup
 - 1. Usar Python 3.10
 - 2. Opcional: usar `venv`, com `python -m venv <env_folder>` e inicializar com `source <env_folder>/bin/activate`
