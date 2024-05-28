@@ -1,8 +1,8 @@
-import http.client, urllib.parse
 import json
 import platform
 import psutil
 import sys
+import requests
 
 import cross_platform_inventory
 
@@ -32,18 +32,15 @@ def linux_inventory(base_dict):
 
 
 def send_inventory(file_content):
-   # parsed_body = urllib.parse.urlencode(file_content)
+   response = requests.post(
+      sys.argv[1],
+      allow_redirects=True,
+      data=file_content,
+      headers={ "Content-type": "application/json" }
+   )
 
-   parsed_url = urllib.parse.urlparse(sys.argv[1])
-
-   conn = http.client.HTTPConnection(parsed_url.hostname, parsed_url.port)
-   conn.request("POST", parsed_url.path, file_content, { "Content-type": "application/json" })
-   response = conn.getresponse()
-   
-   print(response.status, response.reason)
-   print(json.dumps(json.loads(response.read().decode('utf-8')), indent=2))
-   
-   conn.close()
+   print(response.status_code, response.reason)
+   print(response.json())
 
 
 def main():

@@ -24,12 +24,7 @@ if [ -f /etc/gdm3/PostLogin/Default ]; then
   mv /etc/gdm3/PostLogin/Default /etc/gdm3/PostLogin/Default.bkp
 fi
 
-# echo "#!/bin/bash
-# bash /etc/gdm3/PostLogin/inventory_script-master/inventory.sh &> /var/log/inventory.log
-# exit 0
-# " > /etc/gdm3/PostLogin/Default
-
-inventory_url='http://192.168.100.95:4000/inventory'
+inventory_url='https://inventory-server-ivory.vercel.app/inventory'
 
 pip install -r "$inventory_path/src/requirements.txt"
 
