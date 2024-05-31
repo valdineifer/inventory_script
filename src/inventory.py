@@ -40,7 +40,12 @@ def send_inventory(file_content):
    )
 
    print(response.status_code, response.reason)
-   print(response.json())
+
+   try:
+      print(response.json())
+   except requests.JSONDecodeError:
+      print(response.text)
+
 
 
 def main():
