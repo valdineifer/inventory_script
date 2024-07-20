@@ -1,7 +1,6 @@
 import platform
 import psutil
 import socket
-# from uuid import getnode
 import getmac
 
 # TODO: obter modelo de processador
@@ -11,6 +10,7 @@ def get_cpu_info():
       'min_freq': psutil.cpu_freq().min,
       'max_freq': psutil.cpu_freq().max,
    }
+
 
 # TODO: obter informações de discos (modelo, etc)
 def get_disks_info():
@@ -32,6 +32,7 @@ def get_disks_info():
       })
    
    return partitions
+
 
 # TODO: obter infos de MHz
 def get_memory_info():
@@ -62,6 +63,7 @@ def get_sensors_info():
          }
    
    return sensors
+
 
 # TODO: get mac address, etc  
 def inventory():

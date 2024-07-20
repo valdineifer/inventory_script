@@ -3,7 +3,7 @@ import platform
 import psutil
 import sys
 import requests
-
+from uuid import uuid4
 import cross_platform_inventory
 
 def windows_inventory(base_dict):
@@ -31,12 +31,31 @@ def linux_inventory(base_dict):
    return base_dict
 
 
+def get_token():
+   file = open('/root/inventory_token', 'w+')
+   token = file.read()
+
+   if (token):
+      file.close()
+      return token
+   
+   token = str(uuid4())
+
+   file.write(token)
+   file.close()
+
+   return token
+
+
 def send_inventory(file_content):
    response = requests.post(
       sys.argv[1],
       allow_redirects=True,
       data=file_content,
-      headers={ "Content-type": "application/json" }
+      headers={
+         "Content-type": "application/json",
+         "Authorization": f"Bearer {get_token()}",
+      }
    )
 
    print(response.status_code, response.reason)
@@ -45,7 +64,6 @@ def send_inventory(file_content):
       print(response.json())
    except requests.JSONDecodeError:
       print(response.text)
-
 
 
 def main():
