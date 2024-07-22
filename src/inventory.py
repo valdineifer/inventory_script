@@ -32,7 +32,14 @@ def linux_inventory(base_dict):
 
 
 def get_token():
-   file = open('/root/inventory_token', 'w+')
+   # file
+   
+   try:
+      file = open('/root/inventory_token', 'r+')
+   except PermissionError:
+      print('Permission denied when trying to get token')
+      exit(1)
+
    token = file.read()
 
    if (token):
