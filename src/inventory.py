@@ -35,16 +35,17 @@ def get_token():
    # file
    
    try:
-      file = open('/root/inventory_token', 'r+')
+      file = open('/root/inventory_token', 'a+')
    except PermissionError:
       print('Permission denied when trying to get token')
       exit(1)
 
-   token = file.read()
+   file.seek(0)
+   token = file.readline()
 
    if (token):
       file.close()
-      return token
+      return token.replace('\n', '')
    
    token = str(uuid4())
 
